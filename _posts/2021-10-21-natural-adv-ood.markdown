@@ -35,41 +35,41 @@ First, we need to discuss the process of generating NAs (which also raises a hos
 
 The NA method is a black-box adversarial generation method (it does not require any access to target model internals, such as weights, biases, training method etc.). All we need is to know what task it performs (which is fairly easy if you have a working system *“in the wild”*) and then create a dataset which we imagine would be effective at training the model to do that particular job.
 
-As usual, we have a target (black-box) classifier $f$ we want to fool and a dataset $X$ of unlabelled data. The goal is to generate an adversarial input $x^*$ from a clean image $x$ which causes a misclassification $f(x) \neq f(x^*)$. In practice it is not necessary that $x \in X$ since this is not the case for inputs when the model is deployed, but we do assume that the we're working with some underlying distribution $\mathcal{P}_x$ that $x$ is sampled from ($x \sim \mathcal{P}_x$). The key part of producing natural adversaries is that we want $x^*$ to be as close to $x$ as possible in terms of the manifold that defines the data distribution $\mathcal{P}_x$ rather than the original data representation. This also avoids dodgy metrics that are often associated with image similarity, such as $L_2$-norms.
+As usual, we have a target (black-box) classifier $f$ we want to fool and a dataset $X$ of unlabelled data. The goal is to generate an adversarial input $x^ * $ from a clean image $x$ which causes a misclassification $f(x) \neq f(x^ * )$. In practice it is not necessary that $x \in X$ since this is not the case for inputs when the model is deployed, but we do assume that the we're working with some underlying distribution $\mathcal{P}_x$ that $x$ is sampled from ($x \sim \mathcal{P}_x$). The key part of producing natural adversaries is that we want $x^ * $ to be as close to $x$ as possible in terms of the manifold that defines the data distribution $\mathcal{P}_x$ rather than the original data representation. This also avoids dodgy metrics that are often associated with image similarity, such as $L_2$-norms.
 
-Traditional approaches to adversarial attacks focus on searching for adversaries directly in the input space. Zhao's method searches in a corresponding dense representation of $z$ space. Therefore, rather than finding an adversary in the input space (giving us $x^*$ directly) an adversarial $z^*$ is found in an underlying dense vector space which defines the distribution $\mathcal{P}_x$. This is then mapped back to an image $x^*$ with a generative model. By using the latent low-dimensional $z$ space adversaries are encouraged to be valid and semantically close to the original image since it is close to the underlying distribution.
+Traditional approaches to adversarial attacks focus on searching for adversaries directly in the input space. Zhao's method searches in a corresponding dense representation of $z$ space. Therefore, rather than finding an adversary in the input space (giving us $x^ * $ directly) an adversarial $z^ * $ is found in an underlying dense vector space which defines the distribution $\mathcal{P}_x$. This is then mapped back to an image $x^ * $ with a generative model. By using the latent low-dimensional $z$ space adversaries are encouraged to be valid and semantically close to the original image since it is close to the underlying distribution.
 
-Powerful generative models are required to learn a mapping from a latent low-dimensional representation to the distribution $\mathcal{P}_x$ which is estimated using samples from $X$. Using a large amount of unlabelled data from $X$ as training data, a generator $\mathcal{G}_\theta$ learns to map noise with distribution $p_z(z)$ (where $z \in \mathbb{R}^d$) to synthetic data which is as close to the training data as possible. A critic $\mathcal{C}_\omega$ is also trained to discriminate the output of $\mathcal{G}_\theta$ from the true data of $X$.
+Powerful generative models are required to learn a mapping from a latent low-dimensional representation to the distribution $\mathcal{P}_ x$ which is estimated using samples from $X$. Using a large amount of unlabelled data from $X$ as training data, a generator $\mathcal{G}_ \theta$ learns to map noise with distribution $p_z(z)$ (where $z \in \mathbb{R}^d$) to synthetic data which is as close to the training data as possible. A critic $\mathcal{C}_ {\omega}$ is also trained to discriminate the output of $\mathcal{G}_ \theta$ from the true data of $X$.
 
 The objective function for this GAN (refined using the Wasserstein-1 distance making it a WGAN) is defined as:
 
 $$
-\underset{\theta}{\text{min}}\; \underset{\omega}{\text{max}} \; \mathbb{E}_{x \sim p_x(x)}[\mathcal{C}_\omega(x)] - \mathbb{E}_{z \sim p_z(z)}[\mathcal{C}_\omega(\mathcal{G}_\theta(z))]
+\underset{\theta}{\text{min}}\; \underset{\omega}{\text{max}} \; \mathbb{E}_{x \sim p_x(x)}[\mathcal{C}_ \omega(x)] - \mathbb{E}_{z \sim p_z(z)}[\mathcal{C}_ \omega(\mathcal{G}_ \theta(z))]
 $$
 
-To represent natural instances of the domain a WGAN is trained on a dataset $X$ which gives us a generator $\mathcal{G}_\theta$ which maps random dense vectors $x \in \mathbb{R}^d$ to samples $x$ from domain $X$. A matching inverter $\mathcal{I}_\gamma$ is used to map data instances to corresponding dense representations. We can informally think of these as $\mathcal{G}_\theta : Z \to X$ and $\mathcal{I}_\gamma : X \to Z$ where $X$ is the input space and $Z$ is the latent space. The reconstruction error of $x$ is minimised and we also minimise the divergence between sampled $z$ and $\mathcal{I}_\gamma(\mathcal{G}_\theta(z))$ to encourage the latent space to be normally distributed. This is described with the following equation:
+To represent natural instances of the domain a WGAN is trained on a dataset $X$ which gives us a generator $\mathcal{G}_ \theta$ which maps random dense vectors $x \in \mathbb{R}^d$ to samples $x$ from domain $X$. A matching inverter $\mathcal{I}_ \gamma$ is used to map data instances to corresponding dense representations. We can informally think of these as $\mathcal{G}_ \theta : Z \to X$ and $\mathcal{I}_ \gamma : X \to Z$ where $X$ is the input space and $Z$ is the latent space. The reconstruction error of $x$ is minimised and we also minimise the divergence between sampled $z$ and $\mathcal{I}_ \gamma(\mathcal{G}_ \theta(z))$ to encourage the latent space to be normally distributed. This is described with the following equation:
 
 $$
-\underset{\gamma}{\text{min}}\; \mathbb{E}_{x \sim p_x(x)} \| \mathcal{G}_\theta(\mathcal{I}_\gamma(x))-x \| + \lambda \cdot \mathbb{E}_{z \sim p_z(z)}[\mathcal{L}(z, \mathcal{I}_\gamma(\mathcal{G}_\theta(z)))]
+\underset{\gamma}{\text{min}}\; \mathbb{E}_{x \sim p_x(x)} \| \mathcal{G}_ \theta(\mathcal{I}_ \gamma(x))-x \| + \lambda \cdot \mathbb{E}_{z \sim p_z(z)}[\mathcal{L}(z, \mathcal{I}_ \gamma(\mathcal{G}_ \theta(z)))]
 $$
 
-For images, the divergence $\mathcal{L}$ is the $L_2$-norm, and the constant $\lambda$ is set to 0.1. The aim here is to change $\gamma$ to minimise the sum of the expected values. The first part ($\mathbb{E}_{x \sim p_x(x)} \| \mathcal{G}_\theta(\mathcal{I}_\gamma(x))-x \|$) is the difference between the input $x$ projected to the latent space, then projected back to the input space, and the actual input. The second part ($\lambda \cdot \mathbb{E}_{z \sim p_z(z)}[\mathcal{L}(z, \mathcal{I}_\gamma(\mathcal{G}_\theta(z)))]$) is the weighted expectation of the divergence between a point in the latent space and the result of projecting that point to the input space, then back to the latent space. In essence, we're minimising the differences between the two projection directions.
+For images, the divergence $\mathcal{L}$ is the $L_2$-norm, and the constant $\lambda$ is set to 0.1. The aim here is to change $\gamma$ to minimise the sum of the expected values. The first part ($\mathbb{E}_ {x \sim p_x(x)} \| \mathcal{G}_ \theta(\mathcal{I}_ \gamma(x))-x \|$) is the difference between the input $x$ projected to the latent space, then projected back to the input space, and the actual input. The second part ($\lambda \cdot \mathbb{E}_ {z \sim p_z(z)}[\mathcal{L}(z, \mathcal{I}_ \gamma(\mathcal{G}_ \theta(z)))]$) is the weighted expectation of the divergence between a point in the latent space and the result of projecting that point to the input space, then back to the latent space. In essence, we're minimising the differences between the two projection directions.
 
-With the learned functions $\mathcal{I}_\gamma$ and $\mathcal{G}_\theta$ a natural adversarial example $x^*$ is defined as:
+With the learned functions $\mathcal{I}_ \gamma$ and $\mathcal{G}_ \theta$ a natural adversarial example $x^ * $ is defined as:
 
 $$
-x^* = \mathcal{G}_\theta(z^*) \text{ where } z^* = \underset{\tilde{z}}{\text{argmin}}\; \| \tilde{z} - \mathcal{I}_\gamma(x) \| \text{ s.t. } f(\mathcal{G}_\theta(\tilde{z})) \neq f(x)
+x^ * = \mathcal{G}_ \theta(z^ * ) \text{ where } z^ *  = \underset{\tilde{z}}{\text{argmin}}\; \| \tilde{z} - \mathcal{I}_ \gamma(x) \| \text{ s.t. } f(\mathcal{G}_ \theta(\tilde{z})) \neq f(x)
 $$
 
 The difference with traditional adversarial generation techniques is that for this method, the perturbation is performed in the latent space of the input, then projected back into the input space to check if it successfully fools the classifier.
 
 A step-by-step guide:
 
-- Project the input into the latent space: $z' = \mathcal{I}_\gamma (x)$
+- Project the input into the latent space: $z' = \mathcal{I}_ \gamma (x)$
   
 - Apply perturbations to $z'$ giving us $\tilde{z}$ which aims to generate an adversarial result
   
-- Project the perturbed $\tilde{z}$ onto the input space: $\tilde{x} = \mathcal{G}_\theta(\tilde{z})$
+- Project the perturbed $\tilde{z}$ onto the input space: $\tilde{x} = \mathcal{G}_ \theta(\tilde{z})$
   
 - Check if it fools the classifier: $f(\tilde{x})$
   
