@@ -213,7 +213,7 @@ If we look at the images produced by GoogleNet, we can see the features extracte
 ![Vertical stripes of bright multicoloured shapes reminicient of rope.](res/googlenet_3b_f0.png)
 
 With the activation images:
-![Two activation images, left and right. Left shows a dark blue/purple with right being bright yellow/green](res/googlenet_3b_f0_activation.png)
+![Two activation images, left and right. Left shows a dark blue/purple with right being bright yellow/green](res/googlenet_3b_f0_activations.png)
 
 Expanding this to the first 64 filters of 3B leads to these features:
 ![A lot of bright colourful images of varying patterns](res/googlenet_multi_features.png)
