@@ -7,8 +7,6 @@ usemathjax: true
 
 ---
 
-# Feature Extraction (unregularised)
-
 Feature extraction is a really helpful tool that can be used when trying to interpret what a neural network is actually learning under the hood. The process is incredibly simple: we pick a neuron we want to visualise, pass random noise as input to the network, ask the neuron to maximise its activation, and then backpropagate the changes that cause this maximal activation back to the input image. From this, we can effectively 'see' what the neuron is looking at (especially if we work with convolution neurons in the image space), which can help us to interpret what the network strongly responds to. In many image-based applications, this often leads to somewhat recognisable structures, which allow researchers to make conclusions about what a particular neuron activates for.
 
 This simple description focuses on un-regularised features that often suffer from noise and focuses on high-frequency patterns, which oftentimes are not very interpretable to a human observer (however, the patterns do have interesting links to adversarial noise). This problem has a more complex solution, which I won't discuss in this post. We'll keep it simple for now and accept these high-frequency patterns as a stepping stone to a more robust and human-interpretable result.
