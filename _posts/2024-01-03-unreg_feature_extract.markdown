@@ -13,7 +13,7 @@ Feature extraction is a really helpful tool that can be used when trying to inte
 
 This simple description focuses on un-regularised features that often suffer from noise and focuses on high-frequency patterns, which oftentimes are not very interpretable to a human observer (however, the patterns do have interesting links to adversarial noise). This problem has a more complex solution, which I won't discuss in this post. We'll keep it simple for now and accept these high-frequency patterns as a stepping stone to a more robust and human-interpretable result.
 
-As is often the case in computer science, conceptual simplicity does not always entail implementation simplicity. This is also the case for feature visualisation. The code has been implemented as a [colab notebook]() and aims to replicate the results found in this [Keras tutorial](https://keras.io/examples/vision/visualizing_what_convnets_learn/), adapting the code to PyTorch.
+As is often the case in computer science, conceptual simplicity does not always entail implementation simplicity. This is also the case for feature visualisation. The code has been implemented as a [colab notebook](https://colab.research.google.com/drive/1uXHw-6UhXdOTEJhVx0HJP4u7tx5mYfLm?usp=sharing) and aims to replicate the results found in this [Keras tutorial](https://keras.io/examples/vision/visualizing_what_convnets_learn/), adapting the code to PyTorch.
 
 The code starts out with a number of helper functions. `view_available_layers` takes a PyTorch model and gives a list of layers that we have access to and can be used for feature visualisation. It's worth noting that not all layers are suited to feature visualisation, with convolution or batch norm layers often giving the best results.
 
@@ -208,12 +208,24 @@ If we expand this to look at the first 64 features, we get the following images 
 
 ![64 images showing various patterns caused by the feature extraction process. They include, coloured swirls, cross hatching, noise, semi-circles and webbing, to name a few.](res/resnet_multi_feature.png)
 
+If we look at the images produced by GoogleNet, we can see the features extracted by this method. First, the Inception 3B layer focusing on filter 0 shows:
+
+![Vertical stripes of bright multicoloured shapes reminicient of rope.](res/googlenet_3b_f0.png)
+
+With the activation images:
+![Two activation images, left and right. Left shows a dark blue/purple with right being bright yellow/green](res/googlenet_3b_f0_activation.png)
+
+Expanding this to the first 64 filters of 3B leads to these features:
+![A lot of bright colourful images of varying patterns](res/googlenet_multi_features.png)
+
+Within the features above we can see some grey images where the optimisation process has failed to find a good direction to move in, with some features having blocks of grey which is an interesting effect! These failures can be reduced with more complex regularised feature extraction processes.
+
 Of course, this approach to feature visualisation focuses on individual neurons/channels, and since neural networks consist of many hundreds of thousands or even millions of neurons, we only get a small slice of the information. In addition, these feature visualisations often occur with no dependency on previous neurons (each neuron in each layer is maximised in isolation) and since neural networks are incredibly connected structures, this may not give the best indication of the relationship of a neuron to others in the network structure. To expand on this feature visualisation technique, neural circuits are used; however, that's another story.
 
 ---
 
 **Resources**
 
-The Keras implementation can be found [here]([Visualizing what convnets learn](https://keras.io/examples/vision/visualizing_what_convnets_learn/)).
+The Keras implementation can be found [here](https://keras.io/examples/vision/visualizing_what_convnets_learn/).
 
-The post by Olah et al. which started all of this (and is a really useful resource for all things interpretability based) can be found [here]([Feature Visualization](https://distill.pub/2017/feature-visualization/)).
+The post by *Olah et al.* which started all of this (and is a really useful resource for all things interpretability based) can be found [here](https://distill.pub/2017/feature-visualization/).
