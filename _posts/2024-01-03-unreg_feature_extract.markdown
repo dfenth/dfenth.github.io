@@ -198,15 +198,15 @@ The code in the colab notebook focuses on two architectures ResNet-50 and  Googl
 
 The following image strongly activates ResNet at the convolution layer `layer2.0.conv3`, filter 0. The corresponding activation change can be seen below it!
 
-![An image showing the result of ResNet layer 2, third convolution for filter 0 which shows pairs of bright blue and orange lines kind of forming a knitted blanket like texture]()
+![An image showing the result of ResNet layer 2, third convolution for filter 0 which shows pairs of bright blue and orange lines kind of forming a knitted blanket like texture](res/resnet_l2_c3_f0.png)
 
-![Two images showing the difference in activations. The left image, before optimisation is a pale blue, the right image after optimisation is a bright yellow-green indicating that the activation is stronger after optimisation.]()
+![Two images showing the difference in activations. The left image, before optimisation is a pale blue, the right image after optimisation is a bright yellow-green indicating that the activation is stronger after optimisation.](res/resnet_l2_c3_f0_activations.png)
 
 As these images show, the feature visualisation process is able to cause increased activation at the convolution filter specified, which results in a patterned image. 
 
 If we expand this to look at the first 64 features, we get the following images which are reminicient of the Keras tutorial referenced earlier.
 
-![64 images showing various patterns caused by the feature extraction process. They include, coloured swirls, cross hatching, noise, semi-circles and webbing, to name a few.]()
+![64 images showing various patterns caused by the feature extraction process. They include, coloured swirls, cross hatching, noise, semi-circles and webbing, to name a few.](res/resnet_multi_feature.png)
 
 Of course, this approach to feature visualisation focuses on individual neurons/channels, and since neural networks consist of many hundreds of thousands or even millions of neurons, we only get a small slice of the information. In addition, these feature visualisations often occur with no dependency on previous neurons (each neuron in each layer is maximised in isolation) and since neural networks are incredibly connected structures, this may not give the best indication of the relationship of a neuron to others in the network structure. To expand on this feature visualisation technique, neural circuits are used; however, that's another story.
 
