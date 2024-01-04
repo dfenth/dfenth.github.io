@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Feature Extraction (unregularised)"
+title: "Feature Extraction Part 1 - Unregularised"
 date: 2024-1-3 16:43:00 +0000
 categories: research ai interpretability feature-vis
 usemathjax: true
@@ -106,6 +106,7 @@ def hook_visualise(model, target, filter, iterations=30, lr=10.0, opt_type='chan
     Parameters:
     - model (torch.nn.Module): The model to visualise a layer of
     - target (str): The target layer to visualise
+    - filter (int): The target filter/kernel to visualise
     - iterations (int, optional): The number of optimisation iterations to run for (default is 30)
     - lr (float, optional):  The learning rate for image updates (default is 10.0)
     - opt_type (str, optional): The type of optimisation (neuron, channel, layer/dream) (default is 'channel')
@@ -211,6 +212,7 @@ If we look at the images produced by GoogleNet, we can see the features extracte
 ![Vertical stripes of bright multicoloured shapes reminicient of rope.](res/googlenet_3b_f0.png)
 
 With the activation images:
+
 ![Two activation images, left and right. Left shows a dark blue/purple with right being bright yellow/green](res/googlenet_3b_f0_activations.png)
 
 Expanding this to the first 64 filters of 3B leads to these features:
@@ -218,7 +220,31 @@ Expanding this to the first 64 filters of 3B leads to these features:
 
 Within the features above we can see some grey images where the optimisation process has failed to find a good direction to move in, with some features having blocks of grey which is an interesting effect! These failures can be reduced with more complex regularised feature extraction processes.
 
-Of course, this approach to feature visualisation focuses on individual neurons/channels, and since neural networks consist of many hundreds of thousands or even millions of neurons, we only get a small slice of the information. In addition, these feature visualisations often occur with no dependency on previous neurons (each neuron in each layer is maximised in isolation) and since neural networks are incredibly connected structures, this may not give the best indication of the relationship of a neuron to others in the network structure. To expand on this feature visualisation technique, neural circuits are used; however, that's another story.
+
+
+The extracted features above focus on fairly early layers from ResNet and GoogleNet. What about later (higher level) layers?
+
+
+
+The ResNet layer 4 convolution 3 target produces the feature visualisations shown below.
+
+![A lot of bright colourful images of varying patterns. I can't really explain it.](res/resnet_layer4_1_conv3_multi.png)
+
+
+With GoogleNet layer 4e here.
+
+![A lot of bright colourful images of varying patterns. I really can't explain these.](res/googlenet_inception_4e_multi.png)
+
+
+In both instances we see high frequency noisy patterns which don't really resemble anything that we as humans would be able to identify in relation to the classification task (e.g. there are no images which reference cats, dogs, cars or planes). At the later stages of the networks, which we get these features from, we'd expect to see something at least vaguely recognisable.
+
+
+
+This approach to feature visualisation is a good start when we're trying to determine what networks 'see' and gain some insight into the classification process. However, the high frequency patterns leave a lot to be desired when we're trying to understand the behaviour of a network and how classifications are produced (especially at the higher layers of the network). This leads us to regularised feature extraction approaches which generate insights which are more human interpretable. Details on regularised approaches can be found in the next post!
+
+
+
+In addition, this approach to feature visualisation focuses on individual neurons/channels, and since neural networks consist of many hundreds of thousands/millions of neurons, we only get a small slice of the information. In addition, these feature visualisations often occur with no dependency on previous neurons (each neuron in each layer is maximised in isolation) and since neural networks are incredibly connected structures, this may not give the best indication of the relationship of a neuron to others in the network structure. To expand on this feature visualisation technique, neural circuits are used; however, that's another story.
 
 ---
 
