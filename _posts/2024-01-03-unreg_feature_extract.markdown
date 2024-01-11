@@ -1,15 +1,17 @@
 ---
 layout: post
-title: "Feature Extraction Part 1 - Unregularised"
+title: "Feature Visualisation Part 1 - Unregularised"
 date: 2024-1-3 16:43:00 +0000
 categories: research ai interpretability feature-vis
 usemathjax: true
 
 ---
 
-Feature extraction is a really helpful tool that can be used when trying to interpret what a neural network is actually learning under the hood. The process is incredibly simple: we pick a neuron we want to visualise, pass random noise as input to the network, ask the neuron to maximise its activation, and then backpropagate the changes that cause this maximal activation back to the input image. From this, we can effectively 'see' what the neuron is looking at (especially if we work with convolution neurons in the image space), which can help us to interpret what the network strongly responds to. In many image-based applications, this often leads to somewhat recognisable structures, which allow researchers to make conclusions about what a particular neuron activates for.
+Feature visualisation is a really helpful tool that can be used when trying to interpret what a neural network is actually learning under the hood. The process is incredibly simple: we pick a neuron we want to visualise, pass random noise as input to the network, ask the neuron to maximise its activation, and then backpropagate the changes that cause this maximal activation back to the input image. From this, we can effectively 'see' what the neuron is looking at (especially if we work with convolution neurons in the image space), which can help us to interpret what the network strongly responds to. In many image-based applications, this often leads to somewhat recognisable structures, which allow researchers to make conclusions about what a particular neuron activates for.
 
 This simple description focuses on un-regularised features that often suffer from noise and focuses on high-frequency patterns, which oftentimes are not very interpretable to a human observer (however, the patterns do have interesting links to adversarial noise). This problem has a more complex solution, which I won't discuss in this post. We'll keep it simple for now and accept these high-frequency patterns as a stepping stone to a more robust and human-interpretable result.
+
+## The code
 
 As is often the case in computer science, conceptual simplicity does not always entail implementation simplicity. This is also the case for feature visualisation. The code has been implemented as a [colab notebook](https://colab.research.google.com/drive/1uXHw-6UhXdOTEJhVx0HJP4u7tx5mYfLm?usp=sharing) and aims to replicate the results found in this [Keras tutorial](https://keras.io/examples/vision/visualizing_what_convnets_learn/), adapting the code to PyTorch.
 
@@ -193,7 +195,9 @@ def hook_visualise(model, target, filter, iterations=30, lr=10.0, opt_type='chan
     return init_image, history, start_act, best_act, optimized_image, pre_inv
 ```
 
-The code in the colab notebook focuses on two architectures ResNet-50 and  GoogleNet, but the code can be adapted to any architecture.
+The code in the colab notebook focuses on two architectures ResNet-50 and  GoogleNet, but can be adapted to any architecture.
+
+## Feature visualisations
 
 The following image strongly activates ResNet at the convolution layer `layer2.0.conv3`, filter 0. The corresponding activation change can be seen below it!
 
@@ -218,31 +222,21 @@ With the activation images:
 Expanding this to the first 64 filters of 3B leads to these features:
 ![A lot of bright colourful images of varying patterns](res/googlenet_multi_features.png)
 
-Within the features above we can see some grey images where the optimisation process has failed to find a good direction to move in, with some features having blocks of grey which is an interesting effect! These failures can be reduced with more complex regularised feature extraction processes.
-
-
+Within the features above we can see some grey images where the optimisation process has failed to find a good direction to move in, with some features having blocks of grey which is an interesting effect! These failures can be addressed with more complex regularised feature visualisation processes.
 
 The extracted features above focus on fairly early layers from ResNet and GoogleNet. What about later (higher level) layers?
-
-
 
 The ResNet layer 4 convolution 3 target produces the feature visualisations shown below.
 
 ![A lot of bright colourful images of varying patterns. I can't really explain it.](res/resnet_layer4_1_conv3_multi.png)
 
-
 With GoogleNet layer 4e here.
 
 ![A lot of bright colourful images of varying patterns. I really can't explain these.](res/googlenet_inception_4e_multi.png)
 
-
 In both instances we see high frequency noisy patterns which don't really resemble anything that we as humans would be able to identify in relation to the classification task (e.g. there are no images which reference cats, dogs, cars or planes). At the later stages of the networks, which we get these features from, we'd expect to see something at least vaguely recognisable.
 
-
-
-This approach to feature visualisation is a good start when we're trying to determine what networks 'see' and gain some insight into the classification process. However, the high frequency patterns leave a lot to be desired when we're trying to understand the behaviour of a network and how classifications are produced (especially at the higher layers of the network). This leads us to regularised feature extraction approaches which generate insights which are more human interpretable. Details on regularised approaches can be found in the next post!
-
-
+This approach to feature visualisation is a good start when we're trying to determine what networks 'see' and gain some insight into the classification process. However, the high frequency patterns leave a lot to be desired when we're trying to understand the behaviour of a network and how classifications are produced (especially at the higher layers of the network). This leads us to regularised feature visualisation approaches which generate insights which are more human interpretable. Details on regularised approaches can be found in the next post!
 
 In addition, this approach to feature visualisation focuses on individual neurons/channels, and since neural networks consist of many hundreds of thousands/millions of neurons, we only get a small slice of the information. In addition, these feature visualisations often occur with no dependency on previous neurons (each neuron in each layer is maximised in isolation) and since neural networks are incredibly connected structures, this may not give the best indication of the relationship of a neuron to others in the network structure. To expand on this feature visualisation technique, neural circuits are used; however, that's another story.
 

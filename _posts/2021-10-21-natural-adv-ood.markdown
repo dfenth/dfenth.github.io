@@ -66,13 +66,13 @@ The difference with traditional adversarial generation techniques is that for th
 A step-by-step guide:
 
 - Project the input into the latent space: $z' = \mathcal{I}_ \gamma (x)$
-  
+
 - Apply perturbations to $z'$ giving us $\tilde{z}$ which aims to generate an adversarial result
-  
+
 - Project the perturbed $\tilde{z}$ onto the input space: $\tilde{x} = \mathcal{G}_ \theta(\tilde{z})$
-  
+
 - Check if it fools the classifier: $f(\tilde{x})$
-  
+
 
 ### OoD Detection using BNNs
 
