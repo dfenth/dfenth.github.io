@@ -11,8 +11,8 @@ Here are some papers I've worked on!
 
 Daniel Fentham, David Parker, Mark Ryan
 
-Presented at Foundations & Practice of Security 2023 (to be published in LNCS)
+Presented at [Foundations & Practice of Security 2023](https://www.fps-2023.com/) (to be published in LNCS)
 
-[doi](https://doi.org/10.48550/arXiv.2309.06359) - [arXiv](https://arxiv.org/abs/2309.06359)
+[arXiv](https://arxiv.org/abs/2309.06359) - [github](https://github.com/dfenth/RMAggNet/)
 
 ---
