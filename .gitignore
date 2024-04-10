@@ -4,3 +4,4 @@ _site
 .jekyll-metadata
 vendor
 run_local.sh
+.DS_Store
