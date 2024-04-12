@@ -10,7 +10,7 @@ The standard use of model finetuning is fairly easy to get started with. If we j
 
 ```python
 class NewNet(torch.nn.Module):
-    def __init__(self):
+    def __init__(self, new_output_shape):
         super(NewNet, self).__init__()
         self.googlenet = torchvision.models.googlenet(weights='IMAGENET1K_V1')
         output = torch.nn.Linear(self.googlenet.fc.in_features, new_output_shape)
