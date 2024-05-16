@@ -14,13 +14,9 @@ A brief look at a more 'natural' approach to adversarial attacks and whether the
 
 ---
 
----
-
 [Feature Visualisation Part 1](../research/ai/interpretability/feature-vis/2024/01/03/unreg_feature_extract.html)
 
 Making a start with feature visualisation! This is a really cool method when trying to interpret the information a network is learning.
-
----
 
 ---
 
