@@ -10,3 +10,8 @@ This page lists some short notes (mostly to myself) about some things I've learn
 
 [Finetuning models for alternative uses](../research/notes/pytorch/2024/04/10/finetuning.html)
 
+[Loading a custom dataset](../research/notes/pytorch/2024/09/04/custom-dataset.html)
+
+[Train-test splits and K-fold CV](../research/notes/pytorch/2024/09/04/dataset-split.html)
+
+
