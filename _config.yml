@@ -28,6 +28,7 @@ mastodon:
 - username: dfnt
   instance: mastodon.social
 github_username:  dfenth
+linkedin_username: dxf-cs
 
 # Build settings
 markdown: kramdown
