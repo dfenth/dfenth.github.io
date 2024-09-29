@@ -8,6 +8,7 @@ categories: research ai adversarial-attacks out-of-distribution
 A really interesting way to demonstrate how broken many Neural Networks are is to think about *'rubbish inputs'*, which were formalised by *Nguyen et al*[^1]. The authors focused mainly on image classification, but this applies to pretty much any neural network which doesn't have some form of out-of-distribution detection.
 
 The idea here is that most (non-rejection) neural nets *must* classify whatever you give them, regardless of whether it's within the bounds of what they know. This can lead to some interesting results, which are very strange to human observers. The images below show an Inception-V3[^2] network (a fairly standard image classification network used as a base for many other image classifiers) being very certain of the classes, even though the images are just noise to us humans.
+
 ![Images of noise with classifications very certain they're images of a zebra, envelope and bagel respectively](res/rubbish.png)
 
 The code to produce these images is very simple.
