@@ -25,3 +25,9 @@ Making a start with feature visualisation! This is a really cool method when try
 Discusses the more advanced aspects of feature visualisation improving on the previous part!
 
 ---
+
+[Rubbish Images](../research/ai/adversarial-attacks/out-of-distribution/2024/09/28/rubbish-images.html)
+
+Looks at a particular weakness of neural networks when we give them out-of-distribution data to classify.
+
+---
