@@ -31,3 +31,9 @@ Discusses the more advanced aspects of feature visualisation improving on the pr
 Looks at a particular weakness of neural networks when we give them out-of-distribution data to classify.
 
 ---
+
+[My research](../research/ai/adversarial-attacks/out-of-distribution/2024/12/31/what.html)
+
+What my PhD is about!
+
+---
