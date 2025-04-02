@@ -37,3 +37,9 @@ Looks at a particular weakness of neural networks when we give them out-of-distr
 What my PhD is about!
 
 ---
+
+[Feature Visualisation Part 3 (an update)](../research/ai/interpretability/feature-vis/2025/04/02/act-max.html)
+
+An update on feature visualisation using learned kernels! I've simplified some code and thrown out some unnecessary loss functions.
+
+---
