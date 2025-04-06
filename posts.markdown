@@ -43,3 +43,9 @@ What my PhD is about!
 An update on feature visualisation using learned kernels! I've simplified some code and thrown out some unnecessary loss functions.
 
 ---
+
+[Feature Visualisation for Transformers (a first attempt)](../research/ai/interpretability/feature-vis/2025/04/06/transformer-vis-start.html)
+
+A first attempt at applying the feature visualisation techniques to a vision transformer (ViT) which didn't turn out too well!
+
+---
