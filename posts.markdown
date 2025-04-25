@@ -49,3 +49,9 @@ An update on feature visualisation using learned kernels! I've simplified some c
 A first attempt at applying the feature visualisation techniques to a vision transformer (ViT) which didn't turn out too well!
 
 ---
+
+[Explainable AI](../research/ai/interpretability/2025/04/24/xai.html)
+
+Exploring the use of Explainable AI (XAI) as a way of understanding how models work and avoiding mistakes when training them on real data!
+
+---
