@@ -4,12 +4,15 @@
 
 layout: home
 ---
-Welcome to my web page. I'm Daniel Fentham a PhD student studying in the [School of Computer Science](https://www.cs.bham.ac.uk) at the [University of Birmingham](https://www.birmingham.ac.uk/index.aspx). My research focuses on security and interpretability of AI models.
+
+<img alt="A photo of me!" src="/res/profile_photo.jpeg" style="border-radius: 100px">
+
+Welcome to my web page. I'm Daniel Fentham a researcher in the [School of Computer Science](https://www.cs.bham.ac.uk) at the [University of Birmingham](https://www.birmingham.ac.uk/index.aspx). My research focuses on security and interpretability of AI models. I'm currently working on a [RISE](https://www.ukrise.org/) funded project titled "Combating Fake Media with Edit-Tolerant Authentication" with Mark Ryan, Xiao Yang, Shize Deng and David Oswald.
         
 > ~~Thesis title: **Bayesian Geometric Deep Learning for Cyber Security**. The particulars of my thesis proposal can be found [here](res/Thesis_Proposal.pdf) (this is a bit old now and we've changed direction since this was written!).~~
 
-> | Official Thesis title: **Diversity as a Defence Against Neural Network Adversarial Examples** | 
-> This has been submitted and I'm awaiting my viva!
+> Official Thesis title: **Diversity as a Defence Against Neural Network Adversarial Examples** | 
+> This has been submitted and I've passed my viva! I guess I'm a doctor now...
         
 My supervisors are [Professor Mark Ryan](https://www.cs.bham.ac.uk//~mdr/?_ga=2.32706301.2125069532.1564999758-78132280.1554201023) and [Professor Dave Parker](https://www.cs.ox.ac.uk/people/david.parker/home.html)!
 
