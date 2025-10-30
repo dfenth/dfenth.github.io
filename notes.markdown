@@ -14,4 +14,5 @@ This page lists some short notes (mostly to myself) about some things I've learn
 
 [Train-test splits and K-fold CV](../research/notes/pytorch/2024/09/04/dataset-split.html)
 
+[Getting Wav2Lip working on modern hardware with docker](../research/ai/old-code/2025/10/30/wav2lip.html)
 

@@ -1,0 +1,83 @@
+---
+layout: post
+title: "Wav2Lip for modern GPUs"
+date: 2025-10-30 17:00:00 +0000
+categories: research ai old-code
+usemathjax: true
+
+---
+
+We need [Wav2Lip](https://github.com/Rudrabha/Wav2Lip/) for some research we're doing on video authentication. But this project is from 2019-2020 so of course it doesn't work anymore. This does give me an opportunity to work with [docker](https://www.docker.com/) again though, particularly in the context of getting old code to work, which has some particular puzzles associated with it. For example, finding versions cuda that are old enough to work with the ancient versions of PyTorch, while still supporting a modern graphics driver (and trying to take security into account when using old OS images that are no longer patched 😬)!
+
+This docker container seems to work on my computer (Ubuntu 24 with a 3070 GPU). It will only work on a computer with an NVIDIA GPU and may need the [container toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html).
+
+The container is a Ubuntu 18.04 environment (just like the Wav2Lip one) and installs an old version of CUDA so we can use the older versions of PyTorch etc. Since the container is old, there are some security concerns which (I hope) are addressed by creating a non-priveleged user in the dockerfile who we use to execute all of the code.
+
+I've set it all up so when the dockerfile is built and run (code snippets below), you should be left in a bash environment you can use to execute `inference.py`. The directory `ext_files` is mounted as an external volume to the container, so you should have access to it (and all files inside it) when in the bash environment. This means that you can put a dataset of images and audio inside `ext_files` and then pass the file paths to `inference.py` to generate the videos, which are then saved to the `ext_files` directory (just remember to change the `--outfile` file name to avoid overwriting previously generated videos). When you're finished and exit the container the generated videos should be in the `ext_files` directory.
+
+Here is the build command:
+```bash
+docker build -t wav2lip -f wav2lip .
+```
+
+And run command:
+```bash
+docker run --rm -v ./ext_files:/home/appuser/work/vol --gpus all --security-opt=no-new-privileges --cap-drop all -it --entrypoint /bin/bash wav2lip
+```
+
+Here's the code you execute inside the container:
+```bash
+python3 inference.py --checkpoint_path wav2lip_gan.pth --face vol/mona.jpeg --audio vol/ada.mp3 --outfile vol/res.mp4
+```
+
+Here's the dockerfile:
+```dockerfile
+FROM nvidia/cuda:12.1.0-base-ubuntu18.04
+
+# Create a non-priveleged user
+ARG UID=1000
+ARG GID=1000
+RUN groupadd -g ${GID} appgroup && \
+    useradd -m -u ${UID} -g ${GID} -s /bin/bash appuser
+
+# Install necessary packages
+RUN apt-get update && apt-get install -y \
+    python3-pip python3-dev python3-wheel \
+    python3-setuptools python3-apt python3-soundfile \
+    build-essential wget \
+    git \
+    libsm6 libxext6 libxrender1 libglib2.0-0 \
+    ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
+
+# Make the workspace and give the user access
+RUN mkdir -p /home/appuser/work && \ 
+	chown -R ${UID}:${GID} /home/appuser
+
+WORKDIR /home/appuser/work
+
+# Clone the Wav2Lip repo
+RUN git clone https://github.com/Rudrabha/Wav2Lip /home/appuser/work
+# Give the non-priveleged user access
+RUN chown -R appuser:appgroup /home/appuser/work
+
+RUN pip3 install --upgrade pip setuptools wheel
+
+# Download the wav2lip model from google drive
+RUN pip install gdown
+RUN gdown https://drive.google.com/uc?id=1_OvqStxNxLc7bXzlaVG5sz695p-FVfYY
+
+# Download the face detection model
+RUN wget -O face_detection/detection/sfd/s3fd.pth https://www.adrianbulat.com/downloads/python-fan/s3fd-619a316812.pth
+
+# Install packages Wav2Lip requires
+RUN pip3 install numpy==1.17.1
+RUN pip3 install opencv-python==4.1.0.25
+RUN pip3 install torch==1.10.1+cu111 torchvision==0.11.2+cu111 torchaudio==0.10.1 -f https://download.pytorch.org/whl/cu111/torch_stable.html
+RUN pip3 install tqdm==4.45.0
+RUN pip3 install numba==0.43.1
+# librosa causes a lot of issues, so don't pin a version and let pip figure out compatibility
+RUN pip3 install librosa
+
+USER appuser
+```
