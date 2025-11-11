@@ -4,8 +4,8 @@ title: CV
 permalink: /cv/
 ---
 
-🧑‍💻 [GitHub](github.com/dfenth)
-🗄️ [LinkedIn](linkedin.com/in/dxf-cs)
+🧑‍💻 [GitHub](https://github.com/dfenth)
+🗄️ [LinkedIn](https://linkedin.com/in/dxf-cs)
 
 ## Profile ⌘
 ---
