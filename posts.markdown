@@ -55,3 +55,9 @@ A first attempt at applying the feature visualisation techniques to a vision tra
 Exploring the use of Explainable AI (XAI) as a way of understanding how models work and avoiding mistakes when training them on real data!
 
 ---
+
+[Hacking Pokemon for R(ea)L fun](../research/ai/rl/2026/01/14/hacking-pkm.html)
+
+Hacking the Pokémon Crystal Game Boy Color game to try to train an RL agent. This is part 1, discussing setting up the game to make it suitable for AI training.
+
+---
