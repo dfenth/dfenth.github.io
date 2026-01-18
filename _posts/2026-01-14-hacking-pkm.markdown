@@ -6,6 +6,14 @@ categories: research ai rl
 usemathjax: true
 
 ---
+<style>
+video {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+}
+</style>
+
 My first real mind-blowing experience with AI came from DeepMind's [Atari Deep Q-learning agent](https://arxiv.org/abs/1312.5602) way back in 2013! Seeing a computer gradually learn to become proficient at a game and then surpass human experts really captured my imagination and was the catalyst for my investment (through education and research) in AI. Since that time, the AI space has exploded with breakthroughs and investment, but with the renewed interest, I feel like the space has lost some of the magic.
 
 In an attempt to find that spark again, I thought I'd embark on a project that aims to be nothing but an interesting exercise for my own amusement. I've always been interested in Reinforcement Learning (RL), but haven't had many opportunities to work in the space (my research is mostly in computer vision/neural network fundamentals), so, to honour DeepMind's Atari agent, I thought I'd make a computer play a game.

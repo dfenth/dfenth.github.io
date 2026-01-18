@@ -28,6 +28,9 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 mastodon:
 - username: dfnt
   instance: mastodon.social
+# bluesky:
+# - username: dfnth
+#   instance: bsky.social
 github_username:  dfenth
 linkedin_username: dxf-cs
 
