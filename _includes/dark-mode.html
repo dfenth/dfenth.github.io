@@ -69,6 +69,14 @@ body.dark-mode h6 {
   cursor: pointer;
   z-index: 1000;
 }
+
+/* Mobile devices */
+@media (max-width: 600px) {
+  .dark-mode-toggle {
+    top: 60px;
+    right: 20px;
+  }
+}
 </style>
 
 <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark mode" id="darkModeBtn">☽</button>
