@@ -16,3 +16,5 @@ This page lists some short notes (mostly to myself) about some things I've learn
 
 [Getting Wav2Lip working on modern hardware with docker](../research/ai/old-code/2025/10/30/wav2lip.html)
 
+[Some old notes on Graph Neural Networks](../research/notes/gnn/2026/01/20/old-notes-on-gnns.html)
+
