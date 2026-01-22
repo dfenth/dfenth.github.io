@@ -61,3 +61,9 @@ Exploring the use of Explainable AI (XAI) as a way of understanding how models w
 Hacking the Pokémon Crystal Game Boy Color game to try to train an RL agent. This is part 1, discussing setting up the game to make it suitable for AI training.
 
 ---
+
+[Graph Embedding for Malware Detection - A failed paper](../research/gnn/malware/2026/01/21/GEMD-paper.html)
+
+A look at a failed paper on Graph Embedding for Malware Detection. This was work I did early on in my PhD, but needed to be abandoned due to complexity and time constraints.
+
+---
