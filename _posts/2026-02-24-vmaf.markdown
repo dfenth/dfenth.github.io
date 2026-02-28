@@ -1,0 +1,32 @@
+---
+layout: post
+title: "Netflix Video Encoding Quality Metric"
+date: 2026-02-24 12:00:00 +0000
+categories: research paper video
+usemathjax: true
+
+---
+
+These notes are based on a blog post titled: [Toward A Practical Perceptual Video Quality Metric](https://netflixtechblog.com/toward-a-practical-perceptual-video-quality-metric-653f208b9652) by Zhi Li, Anne Aaron, Ioannis Katsavounidis, Anush Moorthy and Megha Manohara from Netflix.
+
+---
+Netflix cares about video quality (of course). This post from 2016 details how they created an encoding quality check that more closely aligns with human perception, which is strategically deployed to assess the quality of videos being served to consumers throughout their vast content delivery network. The authors state that this is to evaluate any changes they make to the streaming method, e.g., encoding algorithms, to ensure customers receive high-quality service, which is something I never really considered. So that's pretty cool.
+
+All of these checks rest on an accurate method for determining the perceptual quality of a video that can be deployed at scale. While human visual perception is the gold standard (humans can quite easily tell if a video stream is low-quality), it's not very scalable and is difficult to automate in the Netflix content delivery network. So we need to fall back on automated processes to evaluate video quality. Historically, methods such as Mean Squared Error ([MSE](https://en.wikipedia.org/wiki/Mean_squared_error)), Peak signal-to-noise ratio ([PSNR](https://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio)), and Structural Similarity Index Measure ([SSIM](https://en.wikipedia.org/wiki/Structural_similarity_index_measure)) have been used, but fail to capture the quality of a video encoding from a human perspective. 
+
+> The aim of this work is to find a correlation between human perception of video quality and the image statistics we can extract.
+
+The authors create a new dataset of 6-second video clips from a range of content available on Netflix and from publicly available sources (animation, videos with film grain, camera motion, indoor/outdoor environments, close-ups of faces, etc.), with a range of resolutions (up to 1920x1080) and bitrates. They then had human observers view each video clip and rate the encoding impairment on a scale from 1 (very annoying) to 5 (not noticeable). The scores from all observers were combined, creating a Differential Mean Opinion Score ([DMOS](https://en.wikipedia.org/wiki/Mean_opinion_score)), normalised in the range 0 to 100 (where 100 is the score of the reference image). The collection of videos and DMOS is the NFLX Video Dataset. The dataset is (unsurprisingly) not publicly available (as far as I'm aware). Another interesting point is that they only used H.264/AVC codec for the tests.
+
+The authors found that the results from PSNR, SSIM, Multiscale FastSSIM and PSNR-HSV showed little correlation with the human DMOS scores. Even more interesting is that different types of content exhibit different relationships between the quantitative metric and the DMOS score, with small degradations in any quantitative metric leading to a noticeable drop in the DMOS score.
+
+To align the DMOS scores with a quantitative metric, the authors propose an ML-based approach, Video Multimethod Assessment Fusion (VMAF), that predicts subjective quality from multiple elementary quality metrics. The rationale is that each elementary quality metric has strengths and weaknesses, based on the types of artefacts and degree of distortion. If we combine a whole bunch of different approaches, we should have something better, right?
+
+The authors fuse the following elementary metrics using SVM regression:
+- Visual Information Fidelity ([VIF](https://ieeexplore.ieee.org/document/1576816)) - Image quality metric based on the idea that quality is complementary to the measure of information fidelity loss. Fidelity loss is measured on four scales (a distortion model consisting of blur, additive noise, and global or local contrast changes, I think), with VMAF including each scale as an elementary metric. These are quantified using spectral methods (I believe).
+- Detail Loss Metric ([DLM](https://ieeexplore.ieee.org/document/5765502)) - Image quality metric based on the idea that we can separately measure the loss of details that impact content visibility. This decouples distortions into additive impairments (redundant visual information that does not exist in the original image, e.g. encoding artefacts) and detail losses (loss of useful visual information). Both of these can be quantified by extracting information from the spectral domain (as I understand it).
+- Motion - A measure of the temporal difference between adjacent frames, calculated by finding the average absolute pixel difference for the luminance component. 
+
+They then train VMAF on the NFLX Training dataset and report results on the testing dataset. The results look convincing. There's a strong $y=x$ linear correlation between the predicted VMAF and DMOS scores. Compared to the existing Video Quality Model with Variable Frame Delay ([VQM-VFD](https://its.ntia.gov/publications/download/11-482.pdf)), it beats it in nearly all tests (and is even stronger when VQM-VFD is used to augment it).
+
+This work is available on GitHub - [VMAF Development Kit (VDK 1.0.0)](https://github.com/Netflix/vmaf?tab=readme-ov-file).

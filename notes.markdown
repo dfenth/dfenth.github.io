@@ -6,6 +6,8 @@ permalink: /notes/
 
 This page lists some short notes (mostly to myself) about some things I've learned the hard way!
 
+## General Notes
+
 [Creating a training and validation split for torchvision datasets](../research/notes/pytorch/2024/04/09/validation.html)
 
 [Finetuning models for alternative uses](../research/notes/pytorch/2024/04/10/finetuning.html)
@@ -18,3 +20,7 @@ This page lists some short notes (mostly to myself) about some things I've learn
 
 [Some old notes on Graph Neural Networks](../research/notes/gnn/2026/01/20/old-notes-on-gnns.html)
 
+
+## Research Papers
+
+[Netflix Video Encoding Quality Metric](../research/paper/video/2026/02/24/vmaf.html)

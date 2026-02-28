@@ -67,3 +67,9 @@ Hacking the Pokémon Crystal Game Boy Color game to try to train an RL agent. Th
 A look at a failed paper on Graph Embedding for Malware Detection. This was work I did early on in my PhD, but needed to be abandoned due to complexity and time constraints.
 
 ---
+
+[letsfoolai - My First Webapp](../projects/ml/2026/02/28/letsfoolai.html)
+
+A detailed exploration of my first ML web app, looking at the creation and deployment!
+
+---

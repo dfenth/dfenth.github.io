@@ -7,7 +7,7 @@ permalink: /cv/
 🧑‍💻 [GitHub](https://github.com/dfenth)
 🗄️ [LinkedIn](https://linkedin.com/in/dxf-cs)
 
-## Profile ⌘
+## Profile 👤
 ---
 Research Assistant at the University of Birmingham with a strong foundation in Artificial Intelligence. Over 5 years of hands-on experience developing models that deliver impactful, responsible, and secure solutions at the forefront of AI research.
 
@@ -58,3 +58,17 @@ Daniel Fentham, David Parker, Mark Ryan (2023)
 Presented at Foundations & Practice of Security 2023 - Published in LNCS
 
 [paper](https://doi.org/10.48550/arXiv.2309.06359) - [GitHub](https://github.com/dfenth/RMAggNet)
+
+## Projects 🛠️
+---
+
+### AndroCFG
+
+
+### RMAggNet
+
+
+### Pokémon RL
+
+
+### letsfoolai
