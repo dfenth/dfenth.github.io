@@ -23,9 +23,11 @@ There are a few parts to this project. We need:
 3) A way to publish the app so anyone can access it.
  
  The MNIST classifier isn't much of a problem. This will just be a small convolutional network built with PyTorch. We'll train the model, store the weights, and then load it at runtime for inference. Since it's just a small MNIST model, and the input will be a single $28 \times 28$ grayscale image, we don't need to involve a GPU at inference time. The inclusion of Integrated Gradients for explainability shouldn't add too much overhead either, so we should be fine with just CPU compute for this project. Of course, if we were handling large images, lots of inputs, or massive models, a GPU would be a necessity, but I'm being very cost-conscious here and don't want to hammer in a nail with a sledgehammer. To include explainability with the classifications, I used [Captum](https://captum.ai/). A library that simply wraps the PyTorch model, and when given the image we've just classified, along with the prediction, it generates an explanation of how the model arrived at its classification. I decided to use the Integrated Gradients[^1] approach to model explainability. To compute the integrated gradients of a model $F$ we start with the input to the model $x$ and a baseline $x'$. The baseline is essentially an input that should elicit no meaningful response from the network (i.e., a response as uniform as possible). In the case of images, this would be a black image. We select a dimension $i$ (a pixel in the case of images) and take a path integral of the gradient along a linear interpolation from $x$ to $x'$:
+
 $$
 IG_i(x) := (x_i - x_i') \cdot \int^1_{\alpha=0} \frac{\partial F (x' + \alpha (x-x'))}{\partial x_i} d\alpha
 $$
+
 Since $\alpha \in [0,1]$, we gradually move along the path from a completely black image to the original colour version. While this is happening, we're paying close attention to the rate of change of the model output with respect to $x_i$. This allows us to understand the importance of dimension $i$ to the classification. Doing this for each pixel (or group of pixels) will enable us to see what parts of the input contribute most strongly to the output, producing a heatmap showing how each section contributes to the final class.
 
 Interfacing with the MNIST classifier is an interesting part of this project for me. I'm a classically trained computer scientist, so most of the programs I've created in the past have been command-line only. This is often great for efficiency and getting to the core of the problem you're solving, but it isn't very accessible to the general public. Because I wanted this to be a web app to exercise my deployment muscle, I knew this would have to be a web page with some JavaScript to make it interactive. I could also use a Python backend to serve the web pages and interact with the model. This was the part I was most cautious about, 1) because I've not done much web programming before, and 2) because I'm a security person and know that there are a lot of things that can go wrong security-wise if you're not careful with your web setup. This is the section I relied on LLMs most heavily. Using them to help me create the JavaScript for the frontend, plug it into the Python backend, and make sure I had addressed most of the obvious security issues. I can't say the result is perfect, but it does work and I haven't been hacked (yet, please don't, if you do find any security issues, please tell me)!
@@ -160,6 +162,33 @@ For the CI/CD portion of this project, I hooked up my [GitHub repo](https://gith
 So, I have a web app now! You can check it out at [letsfoolai.cloud](https://letsfoolai.cloud). You can read a bit about how to fool a classifier and then try it out yourself! I don't expect this to be a very popular app (it's not that interesting), but I'm so happy it all came together, and it works!
 
 This has been such a learning experience. From the classifier to the web server to the deployment, I've had to force myself out of my programming comfort zone to do something new. It's been a headache at times, primarily in deployment, because that is something that I have no experience with, and understanding all the steps I had to go through to deploy containers and then bug fix what went wrong with very in-depth service analysis pages (I had issues with log file permissions, errors in container deployment due to too little memory, etc.). It has been tough, but so worthwhile! At least now I have a small idea about how modern applications are made available to the masses, and I will sympathise with the engineers if a well-known service is down. 😆
+
+## Update on CI/CD
+So, it turns out that when I pushed new updates to the repo, they didn't translate into new builds being deployed by Cloud Run. The culprit was the `cloudbuild.yaml` file. It wasn't set up correctly to deploy automatically after a new build was created, so I had to do a manual deploy by opening the deploy options and selecting the build with the correct commit hash. I think this has been fixed with an updated yaml file:
+```yaml
+steps:
+# Build image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/${PROJECT_ID}/letsfool-ai:${COMMIT_SHA}', '.']
+# Push image to artefact registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${PROJECT_ID}/letsfool-ai:${COMMIT_SHA}']
+# Deploy to cloud run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: [
+    'run', 'deploy', 'letsfool-ai',
+    '--image', 'gcr.io/${PROJECT_ID}/letsfool-ai:${COMMIT_SHA}',
+    '--region', 'europe-west1',
+    '--platform', 'managed'
+  ]
+
+images:
+- 'gcr.io/${PROJECT_ID}/letsfool-ai:${COMMIT_SHA}'
+options:
+  logging: CLOUD_LOGGING_ONLY
+```
+We now have separate build and deploy stages, so when I push to the repo, the new container is automatically built and then deployed via Google Cloud Run.
 
 ---
 # References
