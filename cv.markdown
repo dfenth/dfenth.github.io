@@ -53,6 +53,7 @@ Facilitated the delivery of modules by leading interactive learning sessions and
 ---
 
 ### Using Reed-Muller Codes for Classification with Rejection and Recovery
+---
 
 Daniel Fentham, David Parker, Mark Ryan (2023)
 
@@ -65,6 +66,18 @@ Developed a novel ensemble-based classification-with-rejection and recovery meth
 Presented at Foundations & Practice of Security 2023 - Published in LNCS
 
 [Paper](https://doi.org/10.48550/arXiv.2309.06359) - [GitHub](https://github.com/dfenth/RMAggNet)
+
+---
+### ARASH: Video Authentication from Redactable Hash (in progress 🏗️)
+---
+Xiao Yang, Daniel Fentham, Shize Deng, David Oswald, Mark Ryan
+
+Engineered a novel method for authenticating videos while enabling privacy-preserving edits.
+- Translated the theoretical cryptographic protocol into a working system
+- Implemented GPU-accelerated video processing using JAX, signing a 2-minute 720p video in less than 40 seconds
+- Evaluated our method against existing approaches, providing guarantees of soundness and sensitivity
+
+
 
 ## Projects 🛠️
 ---
