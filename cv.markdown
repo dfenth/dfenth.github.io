@@ -6,6 +6,7 @@ permalink: /cv/
 
 🧑‍💻 [GitHub](https://github.com/dfenth)
 🗄️ [LinkedIn](https://linkedin.com/in/dxf-cs)
+📙 [Google Scholar](https://scholar.google.com/citations?user=8aqetBUAAAAJ&hl=en)
 
 ## Profile 👤
 ---
