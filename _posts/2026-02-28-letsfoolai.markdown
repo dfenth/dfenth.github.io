@@ -77,7 +77,9 @@ And on the more general, centred inputs, we were struggling with before:
 Seems to work pretty well!
 ![Some normal inputs](res/normal_inputs_2.png)
 ![Some normal inputs](res/normal_inputs_3.png)
-This experience reminds me that you can never be too set in your ways when implementing any computer program or ML model that interfaces with a user. There's always going to be something surprising that you never really considered. In this case, it was that the standard MNIST dataset is not very representative of the inputs you should expect from a user. Especially if you give them a lot of space to write in! 
+This experience reminds me that you can never be too set in your ways when implementing any computer program or ML model that interfaces with a user. There's always going to be something surprising that you never really considered. In this case, it was that the standard MNIST dataset is not very representative of the inputs you should expect from a user. Especially if you give them a lot of space to write in!
+
+**UPDATE**: I relaxed the transformations (reducing rotation to 15 degrees, and scale to `(0.8, 1.2)`), and reduced the model size (using fewer convolution kernels and fully connected units). This new model achieved a validation accuracy of ~93%, while reducing the size of the model on disk from 12.5 MB to 1.6 MB!
 
 ## Building an interface
 As I mentioned in the project overview, I didn't have much experience creating frontends for web apps. I hadn't really done much work with JavaScript, especially with interacting with users, sending information to a backend, and retrieving something to show on the page afterwards. Because of this, I relied on LLMs to help me get the code right.
