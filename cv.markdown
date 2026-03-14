@@ -79,6 +79,9 @@ Engineered a novel method for authenticating videos while enabling privacy-prese
 - Translated the theoretical cryptographic protocol into a working system
 - Implemented GPU-accelerated video processing using JAX, signing a 2-minute 720p video in less than 40 seconds
 - Evaluated our method against existing approaches, providing guarantees of soundness and sensitivity
+- Designed experiments to evaluate the efficacy of ARASH including the generation and augmentation of bespoke datasets
+
+[Website](https://markryan.eu/video_auth.html)
 
 ---
 ## Projects 🛠️
@@ -107,7 +110,7 @@ Developing a reinforcement learning agent capable of autonomously playing and wi
 [Related post #1](../research/ai/rl/2026/01/14/hacking-pkm.html)
 
 
-### letsfoolai
+### Letsfool AI
 
 Developed and deployed an interactive AI application enabling users to manipulate handwritten digit inputs to fool a classifier using model explainability feedback.
 - Built and deployed a cloud-hosted web application using Google Cloud Run
