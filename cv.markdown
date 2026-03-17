@@ -94,7 +94,7 @@ Developed a scalable pipeline to construct control flow and function call graphs
 - Implemented function-expansion techniques around suspicious call sites to enhance structural context for classification
 - Added compatibility with established malware detection frameworks (e.g., [CFGExplainer](https://ieeexplore.ieee.org/abstract/document/9833560), [MalGraph](https://ieeexplore.ieee.org/document/9796786))
 - Added `dot` export for graph visualisation and analysis
-- Optimised for high-throughput processing within a toolchain handling tens of thousands of APKs on the Slurm high-performance compute platform
+- Optimised for high-throughput processing within a toolchain handling tens of thousands of APKs (decompilation, graph generation, and feature extraction) on the SLURM high-performance compute platform
 
 [Related post #1](../research/gnn/malware/2026/01/21/GEMD-paper.html) - [GitHub](https://github.com/dfenth/AndroCFG)
 
