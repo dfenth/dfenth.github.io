@@ -73,3 +73,9 @@ A look at a failed paper on Graph Embedding for Malware Detection. This was work
 A detailed exploration of my first ML web app, looking at the creation and deployment!
 
 ---
+
+[Bluesky Search](../projects/ml/2026/05/23/bskysearch.html)
+
+Improving Bluesky search with LLM support!
+
+---
