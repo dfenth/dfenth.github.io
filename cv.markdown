@@ -36,9 +36,9 @@ Dissertation: “Evolutionary Methods for Generating Secure Deep Neural Networks
 
 ### Research Assistant, University of Birmingham
 
-*July 2025 - Present*
+*February 2025 - Present*
 
-Engineered a method for edit-tolerant video authentication to combat fake media. Coordinated with stakeholders to translate theoretical cryptographic techniques into practical, efficient methods for video processing capable of executing in just a few seconds. This is a UK RISE funded project scheduled for presentation in September 2025.
+Engineered a method for edit-tolerant video authentication to combat fake media. Coordinated with stakeholders to translate theoretical cryptographic techniques into practical, efficient methods for video processing capable of executing in just a few seconds. This is a UK RISE funded project presented at the [2026 RISE Collaborative Research Showcase & Spring School](https://www.ukrise.org/2026-spring-school-research-showcase/) and (upcoming) [CRANE 2026](https://www.crane.ac.uk/crane/all-hands-meeting-2026/).
 
 ### Postgraduate Teaching Fellow, University of Birmingham
 
