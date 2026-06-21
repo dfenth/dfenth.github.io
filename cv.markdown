@@ -44,7 +44,7 @@ Engineered a method for edit-tolerant video authentication to combat fake media.
 
 *September 2021 - May 2022*
 
-Led marking initiatives by designing and implementing an automated marking system that efficiently evaluated over 600 students’ submissions in under four hours. Worked with lecturers, designing assignments to align with learning objectives and assessment criteria. The system enabled the use of practical assignments for assessment and ensured consistent and timely feedback for students.
+Led marking initiatives by designing and implementing an automated marking system that efficiently evaluated over 600 students’ submissions in under four hours. Leveraged containerisation using Docker for isolated code execution and parallelisation. Worked with lecturers, designing assignments to align with learning objectives and assessment criteria. The system enabled the use of practical assignments for assessment and ensured consistent and timely feedback for students.
 
 ### Postgraduate Teaching Assistant, University of Birmingham
 
